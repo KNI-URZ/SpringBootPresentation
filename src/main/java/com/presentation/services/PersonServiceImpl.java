@@ -1,7 +1,7 @@
-package com.presentation.presentation.services;
+package com.presentation.services;
 
-import com.presentation.presentation.entity.Person;
-import com.presentation.presentation.exceptions.PersonNotFoundException;
+import com.presentation.exceptions.PersonNotFoundException;
+import com.presentation.entity.Person;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Service;
 

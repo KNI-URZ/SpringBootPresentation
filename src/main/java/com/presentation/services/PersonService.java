@@ -1,6 +1,6 @@
-package com.presentation.presentation.services;
+package com.presentation.services;
 
-import com.presentation.presentation.entity.Person;
+import com.presentation.entity.Person;
 
 import java.util.Set;
 

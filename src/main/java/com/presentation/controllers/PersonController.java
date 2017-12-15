@@ -1,7 +1,7 @@
-package com.presentation.presentation.controllers;
+package com.presentation.controllers;
 
-import com.presentation.presentation.entity.Person;
-import com.presentation.presentation.services.PersonService;
+import com.presentation.entity.Person;
+import com.presentation.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

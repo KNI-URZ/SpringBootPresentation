@@ -1,4 +1,4 @@
-package com.presentation.presentation.entity;
+package com.presentation.entity;
 
 import lombok.*;
 
@@ -14,7 +14,4 @@ public class Person {
     private String firstName;
 
     private String lastName;
-
-
-
 }
