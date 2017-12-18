@@ -6,7 +6,7 @@ import java.util.Set;
 
 public interface PersonService {
 
-    Set<Person> getPersons();
+    Iterable<Person> getPersons();
 
     Person getPerson(Long id);
 
@@ -14,5 +14,5 @@ public interface PersonService {
 
     void deletePerson(Long id);
 
-    void updatePerson(Long id, Person person);
+    void updatePerson(Person person);
 }

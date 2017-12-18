@@ -1,81 +1,61 @@
 package com.presentation.services;
 
+import com.presentation.exceptions.PersonIllegalArgumentException;
 import com.presentation.exceptions.PersonNotFoundException;
 import com.presentation.entity.Person;
+import com.presentation.repositories.PersonRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
-public class PersonServiceImpl implements PersonService, CommandLineRunner {
+public class PersonServiceImpl implements PersonService {
 
-    private Set<Person> personList;
+    private PersonRepository personRepository;
+
+    @Autowired
+    public PersonServiceImpl(PersonRepository personRepository) {
+        this.personRepository = personRepository;
+    }
 
     @Override
-    public Set<Person> getPersons() {
-        return personList;
+    public Iterable<Person> getPersons() {
+        return personRepository.findAll();
     }
 
     @Override
     public Person getPerson(Long id) {
-        Person person = null;
-
-        for (Person p : personList) {
-            if (p.getId() == id) {
-                person = p;
-            }
-        }
-        if (person == null) {
-            throw new PersonNotFoundException();
-        }
-        return person;
+        return Optional.ofNullable(personRepository.findOne(id)).orElseThrow(PersonNotFoundException::new);
     }
 
     @Override
     public void addPerson(Person person) {
-        personList.add(person);
+        personRepository.save(person);
     }
 
     @Override
     public void deletePerson(Long id) {
-        Person person = null;
-        for (Person p : personList) {
-            if (p.getId() == id) {
-                person = p;
-            }
-        }
-        if (person == null) {
+        if (Optional.ofNullable(personRepository.findOne(id)).isPresent()) {
+            personRepository.delete(id);
+        } else {
             throw new PersonNotFoundException();
         }
-
-        personList.remove(person);
     }
 
     @Override
-    public void updatePerson(Long id, Person person) {
-
-        for (Person p : personList) {
-            if (p.getId() == id) {
-                p.setFirstName(person.getFirstName());
-                p.setLastName(person.getLastName());
-            }
+    public void updatePerson(Person person) {
+        if (!Optional.ofNullable(person.getId()).isPresent()) {
+            throw new PersonIllegalArgumentException();
+        }
+        if (personRepository.exists(person.getId())) {
+            personRepository.save(person);
+        } else {
+            throw new PersonNotFoundException();
         }
     }
 
-    @Override
-    public void run(String... strings) throws Exception {
-        injectData();
-    }
-
-    private void injectData() {
-        this.personList = new HashSet() {
-            {
-                add(new Person(1L, "Adam", "Kowalski"));
-                add(new Person(2L, "Mateusz", "Nowak"));
-                add(new Person(3L, "Klaudia", "Strojna"));
-            }
-        };
-    }
 }
