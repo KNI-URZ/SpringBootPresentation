@@ -1,12 +1,12 @@
-package com.prezentacjaspringboot;
+package com.presentation;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class PrezentacjaApplication {
+public class PresentationApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(PrezentacjaApplication.class, args);
+		SpringApplication.run(PresentationApplication.class, args);
 	}
 }
